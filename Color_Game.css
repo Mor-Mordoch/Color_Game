@@ -1,0 +1,20 @@
+body {
+	background-color: #232323;
+}
+
+.square {
+	width: 30%; /* Percentage - from the father element - namely, from the container width! */
+	background: purple;
+	padding-bottom: 30%;
+	float: left;
+	margin: 1.66%; /* 30% for square + 6 margins of 1.66% => 3 squares = 100% */
+}
+
+#container {
+	margin: 0 auto; /* 0 top bottom, equally margined left right */
+	max-width: 600px;
+}
+
+h1 {
+	color: white;
+}
