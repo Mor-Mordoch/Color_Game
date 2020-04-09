@@ -1,5 +1,7 @@
 body {
 	background-color: #232323;
+	margin: 0;
+	font-family: "Arial";
 }
 
 .square {
@@ -8,15 +10,26 @@ body {
 	padding-bottom: 30%;
 	float: left;
 	margin: 1.66%; /* 30% for square + 6 margins of 1.66% => 3 squares = 100% */
+	border-radius: 15%;
+	transition: background 0.6s; /* when a square's background color is changed, do it in 0.6sec and not immediately */
+	-webkit-transition: background 0.6s; /* support in other browsers who doesnt support transition */
+	-moz-transition: background 0.6s; /* support in other browsers who doesnt support transition */
 }
 
 #container {
-	margin: 0 auto; /* 0 top bottom, equally margined left right */
+	margin: 20px auto; /* 20px top bottom, equally margined left right */
 	max-width: 600px;
 }
 
 h1 {
 	color: white;
+	line-height: 1.1;
+	text-align: center;
+	background: steelblue;
+	margin: 0;
+	font-weight: normal;
+	text-transform: uppercase;
+	padding: 20px 0;
 }
 
 #stripe {
@@ -26,5 +39,35 @@ h1 {
 }
 
 .selected {
-	background: blue;
+	color: white;
+	background: steelblue;
+}
+
+#color_display {
+	font-size: 200%; /* from the father element - the h1 the span is inside of */
+}
+
+button {
+	border: none;
+	background: none;
+	text-transform: uppercase;
+	height: 100%;
+	font-weight: 700;
+	color: steelblue;
+	letter-spacing: 1px;
+	font-size: inherit; /* inherit - specifies that a property should inherit its value from its parent element. */
+	transition: all 0.3s; /* anytime a proerty changes on any button, it takes 0.3s */
+	outline: none;
+	-webkit-transition: all 0.3s; /* support in other browsers who doesnt support transition */
+	-moz-transition: all 0.3s; /* support in other browsers who doesnt support transition */
+}
+
+button:hover {
+	color: white;
+	background: steelblue;
+}
+
+#message {
+	display: inline-block;
+	width: 20%;
 }

@@ -1,26 +1,79 @@
-/* ------------------------------- */ 
-/* Declaration of HTML DOM objects
-/* ------------------------------- */
+/* --------------------- */ 
+/* Variables Declaration */
+/* --------------------- */
 var squares         = document.querySelectorAll(".square");
 var color_display   = document.getElementById("color_display");
 var message_display = document.getElementById("message");
 var reset_btn       = document.querySelector("#reset");
 var h1              = document.querySelector("h1");
-var easy_btn        = document.querySelector("#easy_btn");
-var hard_btn        = document.querySelector("#hard_btn");
-
-/* ---------------------------------- */
-/* Initializations
-/* ---------------------------------- */
+var mode_btns       = document.querySelectorAll(".mode_btn");
 var num_of_squares  = 6;
-var colors          = generate_colors_list(num_of_squares);
-var picked_color    = pick_color(); 
+var colors          = [];
+var picked_color; 
 
-color_display.textContent = picked_color;
+init();
+
+/* ---------------------------------------------------------------- */ 
+/* Type : function                                                  */ 
+/* Descripton: Algorithm to run in the beginning of every page load */ 
+/* Sub-functions: setup_mode_buttons(), setup_squares(), reset()    */ 
+/* ---------------------------------------------------------------- */ 
+function init()
+{
+	setup_mode_buttons();
+	setup_squares();
+	reset();
+}
+
+/* ------------------------------------------------- */
+/* Type : function                                   */
+/* Description : mode buttons event listeners        */ 
+/* Sub-functions: reset()                            */
+/* ------------------------------------------------- */
+function setup_mode_buttons() {
+	for(var i = 0; i < mode_btns.length; i++)
+	{
+		mode_btns[i].addEventListener("click", function() {
+			for(var j = 0; j < mode_btns.length; j++)
+				mode_btns[j].classList.remove("selected");
+			this.classList.add("selected");
+			num_of_squares = (this.textContent === "Easy") ? 3 : 6;
+			reset();
+		});
+	}
+}
+
+/* --------------------------------------------- */
+/* Type : function                               */
+/* Description : squares buttons event listeners */ 
+/* Sub-functions: change_colors(clicked_color)   */
+/* --------------------------------------------- */
+function setup_squares() {
+	for (var i = 0; i < squares.length; i++)
+	{
+		//add click listeners to squares
+		squares[i].addEventListener("click", function() {
+			var clicked_color = this.style.backgroundColor;	
+			if (clicked_color === picked_color) //compare the clicked square color to the picked color
+			{
+				message_display.textContent = "Correct!";
+				change_colors(clicked_color);
+				reset_btn.textContent = "Play Again?"; 
+				h1.style.backgroundColor = clicked_color;
+			}
+			else
+			{
+				this.style.backgroundColor = "#232323";
+				message_display.textContent = "Try Again!";
+			}
+		});
+	}
+}
 
 /* ------------------------------------------------- */
 /* Type : addEventListener                           */
 /* Description : Explanation for rgb on double click */ 
+/* Sub-functions: None                               */
 /* ------------------------------------------------- */
 color_display.addEventListener("dblclick", function() {
 	var open_par = picked_color.indexOf("(");
@@ -34,91 +87,44 @@ color_display.addEventListener("dblclick", function() {
 	alert("Red: " + r + "/255 | Green: " + g + "/255 | Blue: " + b + "/255");
 });
 
-/* --------------------------------------------------------------------------------------------------- */
-/* Type : addEventListener                                                                             */
-/* Description : Redefine DOM objects and other important details in case of EASY game level selection */ 
-/* --------------------------------------------------------------------------------------------------- */
-easy_btn.addEventListener("click", function() {
-	easy_btn.classList.add("selected");
-	hard_btn.classList.remove("selected");
-	num_of_squares = 3;
+/* -------------------------------------------------------------------------------------------------- */
+/* Type : function                                                                                    */
+/* Description: generating new colors list, determine a color to pick and represent required squares. */
+/* Sub-functions: generate_colors_list(num_of_squares), pick_color()                                  */
+/* -------------------------------------------------------------------------------------------------- */ 
+function reset() 
+{
 	colors = generate_colors_list(num_of_squares);
 	picked_color = pick_color();
 	color_display.textContent = picked_color;
-	for (var i = 0; i < squares.length; i++)
+	reset_btn.textContent = "New Colors";
+	for(var i = 0; i < squares.length;i++)
 	{
-		if (colors[i])
+		if(colors[i])
 		{
+			squares[i].style.display = "block";
 			squares[i].style.backgroundColor = colors[i];
 		}
 		else
-		{
 			squares[i].style.display = "none";
-		}
 	}
-});
-
-/* --------------------------------------------------------------------------------------------------- */
-/* Type : addEventListener                                                                             */
-/* Description : Redefine DOM objects and other important details in case of HARD game level selection */ 
-/* --------------------------------------------------------------------------------------------------- */
-hard_btn.addEventListener("click", function() {
-	easy_btn.classList.remove("selected");
-	hard_btn.classList.add("selected");
-	num_of_squares = 6;
-	colors = generate_colors_list(num_of_squares);
-	picked_color = pick_color();
-	color_display.textContent = picked_color;
-	for (var i = 0; i < squares.length; i++)
-	{
-		squares[i].style.backgroundColor = colors[i];
-		squares[i].style.display = "block";
-	}
-});
+	h1.style.backgroundColor = "steelblue";
+	message_display.textContent = "";
+}
 
 /* ------------------------------------------------------------------------- */
 /* Type : addEventListener                                                   */
-/* Description : Reset the game according to the last configuration selected */ 
+/* Description : Reset the game when the user press the Reset button         */
+/* Sub-functions: None                                                       */ 
 /* ------------------------------------------------------------------------- */
 reset_btn.addEventListener("click", function() {
-	colors = generate_colors_list(num_of_squares);
-	picked_color = pick_color();
-	color_display.textContent = picked_color;
-	for(var i = 0; i < squares.length;i++)
-		squares[i].style.backgroundColor = colors[i];
-	h1.style.backgroundColor = "#232323";
+	reset();
 });
 
-/* The game in action, including other GUI features */
-for (var i = 0; i < squares.length; i++)
-{
-	//initialize constant colors to the squares
-	squares[i].style.backgroundColor = colors[i];
-
-	//add click listeners to squares
-	squares[i].addEventListener("click", function() {
-		var clicked_color = this.style.backgroundColor;
-
-		//compare the clicked square color to the picked color
-		if (clicked_color === picked_color)
-		{
-			message_display.textContent = "Correct!";
-			change_colors(clicked_color);
-			reset_btn.textContent = "Play Again?"; 
-			h1.style.backgroundColor = clicked_color;
-		}
-		else
-		{
-			this.style.backgroundColor = "#232323";
-			message_display.textContent = "Try Again!";
-			//reset_btn.textContent = "New Colors"; 
-		}
-	});
-}
-
 /* --------------------------------------------------------- */
-/* Type : function
-/* Description : change all squares color to the given color
+/* Type : function                                           */
+/* Description : change all squares color to the given color */
+/* Sub-functions: None                                       */ 
 /* --------------------------------------------------------- */
 function change_colors(color) {
 	for(var i = 0; i < squares.length; i++)
@@ -128,8 +134,9 @@ function change_colors(color) {
 }
 
 /* ---------------------------------------------------------- */
-/* Type : function
-/* Description : picks a random color out of the colors array
+/* Type : function                                            */
+/* Description : picks a random color out of the colors array */
+/* Sub-functions: None                                        */ 
 /* ---------------------------------------------------------- */
 function pick_color()
 {
@@ -138,8 +145,9 @@ function pick_color()
 }
 
 /* ----------------------------------------------- */
-/* Type : function
-/* Description : generate a num-sized colors array 
+/* Type : function                                 */
+/* Description : generate a num-sized colors array */
+/* Sub-functions: None                             */ 
 /* ----------------------------------------------- */
 function generate_colors_list(num)
 {
@@ -152,8 +160,9 @@ function generate_colors_list(num)
 }
 
 /* ------------------------------------------------------------ */
-/* Type : function
-/* Description : Returns a string describing a single RGB color
+/* Type : function                                              */
+/* Description : Returns a string describing a single RGB color */
+/* Sub-functions: None                                          */ 
 /* ------------------------------------------------------------ */
 function random_color()
 {
