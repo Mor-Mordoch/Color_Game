@@ -18,6 +18,22 @@ var picked_color    = pick_color();
 
 color_display.textContent = picked_color;
 
+/* ------------------------------------------------- */
+/* Type : addEventListener                           */
+/* Description : Explanation for rgb on double click */ 
+/* ------------------------------------------------- */
+color_display.addEventListener("dblclick", function() {
+	var open_par = picked_color.indexOf("(");
+	var close_par = picked_color.indexOf(")");
+	var first_comma = picked_color.indexOf(",");
+	var second_comma = picked_color.indexOf(",", first_comma + 1);
+
+	var r = picked_color.slice(open_par + 1, first_comma);
+	var g = picked_color.slice(first_comma + 1,second_comma);
+	var b = picked_color.slice(second_comma + 1, close_par);
+	alert("Red: " + r + "/255 | Green: " + g + "/255 | Blue: " + b + "/255");
+});
+
 /* --------------------------------------------------------------------------------------------------- */
 /* Type : addEventListener                                                                             */
 /* Description : Redefine DOM objects and other important details in case of EASY game level selection */ 
