@@ -84,9 +84,11 @@ reset_btn.addEventListener("click", function() {
 	colors = generate_colors_list(num_of_squares);
 	picked_color = pick_color();
 	color_display.textContent = picked_color;
+	this.textContent = "New Colors";
 	for(var i = 0; i < squares.length;i++)
 		squares[i].style.backgroundColor = colors[i];
-	h1.style.backgroundColor = "#232323";
+	h1.style.backgroundColor = "steelblue";
+	message_display.textContent = "";
 });
 
 /* The game in action, including other GUI features */
