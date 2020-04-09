@@ -5,6 +5,14 @@
 	<link rel="stylesheet" type="text/css" href="Color_Game.css">
 </head>
 <body>
+	<h1>The <span id = "color_display">RGB</span> Color Game !</h1> <!-- span color will inherit the h1 color -->
+	<div id = "stripe">
+		<button id = "reset">New Colors</button>
+		<span id = "message"></span>
+		<button id = "easy_btn">Easy</button>
+		<button id = "hard_btn" class = "selected">Hard</button>
+	</div>
+
 	<div id = "container"> <!-- insert the squares into div so we can easily design them together later-->
 		<div class = "square"></div>
 		<div class = "square"></div>
@@ -13,7 +21,7 @@
 		<div class = "square"></div>
 		<div class = "square"></div>
 	</div>
-	
+
 	<script type="text/javascript" src = "Color_Game.js"></script>
 </body>
 </html>
