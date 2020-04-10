@@ -71,3 +71,15 @@ button:hover {
 	display: inline-block;
 	width: 20%;
 }
+
+.hard_mode {
+	width: 22.5%;
+	padding-bottom: 22.5%;
+	margin: 1.125%;
+}
+
+/*.expert_mode {
+	width: 15%;
+	padding-bottom: 15%;
+	margin: 0.833%;
+}*/
