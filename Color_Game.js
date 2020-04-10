@@ -36,8 +36,29 @@ function setup_mode_buttons() {
 		mode_btns[i].addEventListener("click", function() {
 			for(var j = 0; j < mode_btns.length; j++)
 				mode_btns[j].classList.remove("selected");
+
+			for(var j = 0; j < squares.length; j++)
+			{
+				squares[j].classList.remove("hard_mode");
+				//squares[j].classList.remove("expert_mode");
+			}
 			this.classList.add("selected");
-			num_of_squares = (this.textContent === "Easy") ? 3 : 6;
+			if (this.textContent === "Easy")
+				num_of_squares = 3;
+			else if (this.textContent === "Medium")
+				num_of_squares = 6;
+			else if (this.textContent == "Hard")
+			{
+				num_of_squares = 12;
+				for (var i = 0; i < squares.length; i++)
+					squares[i].classList.add("hard_mode");
+			}
+			//else
+			//{
+			//	num_of_squares = 18;
+			//	for (var i = 0; i < squares.length; i++)
+			//		squares[i].classList.add("expert_mode");
+			//}
 			reset();
 		});
 	}
@@ -49,6 +70,14 @@ function setup_mode_buttons() {
 /* Sub-functions: change_colors(clicked_color)   */
 /* --------------------------------------------- */
 function setup_squares() {
+	console.log("pre setup_squares consition");
+	if (num_of_squares == 12)
+	{
+		console.log("9 is pressed");
+		//for (var i = 0; i < squares.length; i++)
+			//squares[i].style.width = "22.5%";
+	}
+	console.log("post setup_squares consition");
 	for (var i = 0; i < squares.length; i++)
 	{
 		//add click listeners to squares
